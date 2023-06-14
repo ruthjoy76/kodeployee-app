@@ -93,6 +93,7 @@ function LoginForm({
             to="/register"
             className="text-small font-bold  text-purple-600 hover:underline"
           >
+            {" "}
             Sign Up here.
           </Link>
         </p>

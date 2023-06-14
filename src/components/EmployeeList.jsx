@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import employeeService from "../services/employeeService";
-import { FaTrash } from "react-icons/fa";
+import { FaTrash, FaEdit } from "react-icons/fa";
 
 function EmployeeList({ employees, setEmployees }) {
   useEffect(() => {
@@ -19,21 +19,21 @@ function EmployeeList({ employees, setEmployees }) {
   };
 
   return (
-    <ul className="grid grid-cols-3 gap-4  items-left justify-center w-full h-full">
+    <ul className="w-full h-full">
       {employees.map((employee) => (
         <li
           key={employee.id}
           className="flex items-center justify-between bg-white rounded-lg shadow-md w-96 p-4 mb-4"
         >
-          <span className="text-gray-800">
-            {employee.name}: {employee.number}
-          </span>
+          {employee.name} {employee.number}
+          <button className="text-blue-500 hover:text-blue-700" onClick="">
+            <FaEdit size="1rem" />
+          </button>
           <button
-            className="text-purple-500 hover:text-purple-700 focus:outline-none"
+            className="text-red-500 hover:text-red-700"
             onClick={() => deleteEmployee(employee.id)}
           >
-            {" "}
-            <FaTrash size="1.5rem" />
+            <FaTrash size="1rem" />
           </button>
         </li>
       ))}

@@ -29,7 +29,7 @@ function EmployeeForm({ employees, setEmployees }) {
   return (
     <form onSubmit={addEmployee} className="mt-8 space-y-6">
       <h1>
-        Employee Count:{" "}
+        Total Employees:{" "}
         <span className="bg-green-500 text-white font-bold w-24 py-2 px-3">
           {employees.length}
         </span>
