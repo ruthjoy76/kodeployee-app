@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { FaFacebookSquare, FaGithubSquare, FaGoogle } from "react-icons/fa";
 import userService from "../services/userService";
 
 function RegisterForm({ user }) {
@@ -27,57 +28,77 @@ function RegisterForm({ user }) {
   };
 
   return (
-    <div className="flex flex-col gap-2">
-      <h1 className="text-4xl mb-4 text-center font-bold">
-        Register an account
-      </h1>
-      <form
-        onSubmit={handleRegistration}
-        className="p-4 flex flex-col gap-2 border-solid border-2 border-slate-500 md:mx-auto md:w-1/2 lg:w-1/4"
-      >
-        <div className="flex flex-col">
-          Name
-          <input
-            type="text"
-            name="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="border-solid border-2 border-slate-500 p-2"
-          />
+    <div className="relative flex flex-col justify-center min-h-screen overflow-hidden ">
+      <div className="w-full p-6 m-auto bg-white rounded-md shadow-xl shadow-gray-600/40 ring ring-2 ring-purple-600 lg:max-w-xl">
+        <img className="mx-auto w-40" src=" /logo.png" alt="logo" />
+        <h1 className=" text -xl font-bold text-center text-purple-500 uppercase decoration-wavy">
+          Register an Account
+        </h1>
+        <form onSubmit={handleRegistration} className="mt-6">
+          <div className="mb-2">
+            Name
+            <input
+              type="text"
+              name="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className=" block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring- purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
+            />
+          </div>
+          <div className="mt-6">
+            Username
+            <input
+              type="text"
+              name="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              className=" block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring- purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
+            />
+          </div>
+          <div className="mt-6">
+            Password 🔐
+            <input
+              type="password"
+              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring- purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
+            />
+          </div>
+          <button
+            type="submit"
+            className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover :bg-purple-600 focus:outline-none focus:bg-purple-600"
+          >
+            Register
+          </button>
+        </form>
+
+        <div className="relative flex items-center justify-center w-full mt-6 border border-t">
+          <div className="absolute px-5 bg-white"> Or </div>
         </div>
-        <div className="flex flex-col">
-          Username
-          <input
-            type="text"
-            name="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            className="border-solid border-2 border-slate-500 p-2"
-          />
+        <div className="flex mt-4 gap-x-2">
+          <button className="flex items-center justify-center w-full p-2 border border-gray-600 rounded-md focus:ring-2 focus:ring-offset-1 focus:ring-violet-600">
+            <FaGoogle size="1.5rem" />
+          </button>
+          <button className="flex items-center justify-center w-full p-2 border border-gray-600 rounded-md focus:ring-2 focus:ring-offset- 1 focus:ring-violet-600">
+            <FaFacebookSquare size="1.5rem" />
+          </button>
+
+          <button className="flex items-center justify-center w-full p-2 border border-gray-600 rounded-md focus:ring-2 focus:ring-offset -1 focus:ring-violet-600">
+            <FaGithubSquare size="1.5rem" />
+          </button>
         </div>
-        <div className="flex flex-col">
-          Password
-          <input
-            type="password"
-            name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="border-solid border-2 border-slate-500 p-2"
-          />
-        </div>
-        <button
-          type="submit"
-          className="bg-slate-500 p-2 mt-2 text-white font-bold"
-        >
-          Register
-        </button>
-      </form>
-      <p className="text-center">
-        Already have an account?{" "}
-        <Link to="/login" className="text-blue-500">
-          Login here.
-        </Link>
-      </p>
+
+        <p className="mt-8 text-small font-bold text-center text-gray-700">
+          Already have an account?{" "}
+          <Link
+            to="/login"
+            className="text-small font-bold  text-purple-600 hover:underline"
+          >
+            Login here.
+          </Link>
+        </p>
+      </div>
     </div>
   );
 }

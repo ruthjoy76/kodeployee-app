@@ -19,8 +19,13 @@ function Information({ user, employees, setEmployees, setUser }) {
     <div className="flex flex-col gap-2">
       <h1 className="text-4xl mb-4 text-center font-bold">Employee</h1>
 
-      <EmployeeList employees={employees} setEmployees={setEmployees} />
-      <EmployeeForm employees={employees} setEmployees={setEmployees} />
+      {user && (
+        <>
+          {" "}
+          <EmployeeList employees={employees} setEmployees={setEmployees} />
+          <EmployeeForm employees={employees} setEmployees={setEmployees} />
+        </>
+      )}
 
       <p className="flex justify-between items-center text-sm">
         {user?.name} is logged in{" "}

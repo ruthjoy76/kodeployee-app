@@ -9,7 +9,11 @@ function setToken(newToken) {
 }
 
 function getEmployees() {
-  return axios.get(baseUrl).then((res) => res.data);
+  const config = {
+    headers: { Authorization: token },
+  };
+
+  return axios.get(baseUrl, config).then((res) => res.data);
 }
 
 function createEmployee(employee) {

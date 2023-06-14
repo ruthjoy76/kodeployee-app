@@ -2,7 +2,7 @@ import "./App.css";
 import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import employeeService from "./services/employeeService";
-import Information from "./pages/Information";
+import EmployeeRecords from "./pages/EmployeeRecords";
 import LoginForm from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm";
 
@@ -29,7 +29,7 @@ function App() {
           <Route
             path="/"
             element={
-              <Information
+              <EmployeeRecords
                 user={user}
                 employees={employees}
                 setEmployees={setEmployees}
