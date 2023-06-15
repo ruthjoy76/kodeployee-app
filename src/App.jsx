@@ -61,7 +61,6 @@ function App() {
       </div>
       <Dashboard />
     </div>
-    
   );
 }
 
