@@ -5,6 +5,7 @@ import employeeService from "./services/employeeService";
 import EmployeeRecords from "./pages/EmployeeRecords";
 import LoginForm from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm";
+import Dashboard from "./components/Dashboard";
 
 function App() {
   const [employees, setEmployees] = useState([]);
@@ -58,7 +59,9 @@ function App() {
           <Route path="/register" element={<RegisterForm user={user} />} />
         </Routes>
       </div>
+      <Dashboard />
     </div>
+    
   );
 }
 
