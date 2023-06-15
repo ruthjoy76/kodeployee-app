@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = "http://localhost:8080/api/employees";
+const baseUrl = "/api/employees";
 
 let token = null;
 
@@ -25,7 +25,10 @@ function createEmployee(employee) {
 }
 
 function deleteEmployee(id) {
-  return axios.delete(`${baseUrl}/${id}`).then((res) => res.status);
+  const config = {
+    headers: { Authorization: token },
+  };
+  return axios.delete(`${baseUrl}/${id}`, config).then((res) => res.status);
 }
 
 export default {

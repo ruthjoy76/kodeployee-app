@@ -2,8 +2,16 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import EmployeeForm from "../components/EmployeeForm";
 import EmployeeList from "../components/EmployeeList";
+import LoadingSpinner from "../components/LoadingSpinner";
 
-function Information({ user, employees, setEmployees, setUser }) {
+function Information({
+  user,
+  employees,
+  loading,
+  setEmployees,
+  setUser,
+  setLoading,
+}) {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -15,6 +23,8 @@ function Information({ user, employees, setEmployees, setUser }) {
     setUser(null);
   };
 
+  if (loading) return <LoadingSpinner />;
+
   return (
     <div className="flex flex-col gap-2">
       <h1 className="text-4xl mb-4 text-center font-bold">Employee</h1>
@@ -22,8 +32,16 @@ function Information({ user, employees, setEmployees, setUser }) {
       {user && (
         <>
           {" "}
-          <EmployeeList employees={employees} setEmployees={setEmployees} />
-          <EmployeeForm employees={employees} setEmployees={setEmployees} />
+          <EmployeeList
+            employees={employees}
+            setEmployees={setEmployees}
+            setLoading={setLoading}
+          />
+          <EmployeeForm
+            employees={employees}
+            setEmployees={setEmployees}
+            setLoading={setLoading}
+          />
         </>
       )}
 

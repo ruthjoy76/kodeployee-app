@@ -11,6 +11,7 @@ function App() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem("loggedInformationUser");
@@ -32,8 +33,10 @@ function App() {
               <EmployeeRecords
                 user={user}
                 employees={employees}
+                loading={loading}
                 setEmployees={setEmployees}
                 setUser={setUser}
+                setLoading={setLoading}
               />
             }
           />
@@ -44,9 +47,11 @@ function App() {
                 user={user}
                 username={username}
                 password={password}
+                loading={loading}
                 setUsername={setUsername}
                 setPassword={setPassword}
                 setUser={setUser}
+                setLoading={setLoading}
               />
             }
           />

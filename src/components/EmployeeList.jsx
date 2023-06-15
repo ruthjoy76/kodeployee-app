@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import employeeService from "../services/employeeService";
 import { FaTrash, FaEdit } from "react-icons/fa";
 
-function EmployeeList({ employees, setEmployees }) {
+function EmployeeList({ employees, setEmployees, setLoading }) {
   useEffect(() => {
     employeeService
       .getEmployees()
@@ -13,9 +13,15 @@ function EmployeeList({ employees, setEmployees }) {
   }, []);
 
   const deleteEmployee = (id) => {
-    employeeService.deleteEmployee(id).then((_response) => {
-      setEmployees(employees.filter((employee) => employee.id !== id));
-    });
+    setLoading(true);
+
+    employeeService
+      .deleteEmployee(id)
+      .then((_response) => {
+        setEmployees(employees.filter((employee) => employee.id !== id));
+      })
+      .catch((error) => console.log(error))
+      .finally(() => setLoading(false));
   };
 
   return (
@@ -25,6 +31,11 @@ function EmployeeList({ employees, setEmployees }) {
           key={employee.id}
           className="flex items-center justify-between bg-white rounded-lg shadow-md w-96 p-4 mb-4"
         >
+          <img
+            src={employee.photoInfo.url}
+            alt="contact photo"
+            className="w-10 h-10 rounded-full"
+          />
           {employee.name} {employee.number}
           <button className="text-blue-500 hover:text-blue-700" onClick="">
             <FaEdit size="1rem" />

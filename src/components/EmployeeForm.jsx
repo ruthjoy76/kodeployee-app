@@ -1,7 +1,7 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import employeeService from "../services/employeeService";
 
-function EmployeeForm({ employees, setEmployees }) {
+function EmployeeForm({ employees, setEmployees, setLoading }) {
   const [newEmployee, setNewEmployee] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [newPhoto, setNewPhoto] = useState(null);
@@ -9,6 +9,8 @@ function EmployeeForm({ employees, setEmployees }) {
 
   const addEmployee = (event) => {
     event.preventDefault();
+
+    setLoading(true);
 
     const employeeObject = new FormData();
     employeeObject.append("name", newEmployee);
@@ -23,7 +25,8 @@ function EmployeeForm({ employees, setEmployees }) {
         setNewEmployee("");
         setNewNumber("");
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.log(error))
+      .finally(() => setLoading(false));
   };
 
   return (
