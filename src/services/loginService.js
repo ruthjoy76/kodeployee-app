@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = "/api/login";
+const baseUrl = "http://localhost:8080/api/login";
 
 function login(credentials) {
   return axios.post(baseUrl, credentials).then((res) => res.data);

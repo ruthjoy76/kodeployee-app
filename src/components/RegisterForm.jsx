@@ -2,9 +2,8 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaFacebookSquare, FaGithubSquare, FaGoogle } from "react-icons/fa";
 import userService from "../services/userService";
-import LoadingSpinner from "../components/LoadingSpinner";
 
-function RegisterForm({ user, loading, setLoading }) {
+function RegisterForm({ user }) {
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -17,8 +16,6 @@ function RegisterForm({ user, loading, setLoading }) {
   const handleRegistration = (e) => {
     e.preventDefault();
 
-    setLoading(true);
-
     userService
       .register({ name, username, password })
       .then((_res) => {
@@ -28,14 +25,11 @@ function RegisterForm({ user, loading, setLoading }) {
         setPassword("");
       })
       .catch((error) => console.log(error))
-      .finally(() => setLoading(false));
   };
-
-  if (loading) return <LoadingSpinner />;
 
   return (
     <div className="relative flex flex-col justify-center min-h-screen overflow-hidden ">
-      <div className="w-full p-6 m-auto bg-white rounded-md shadow-xl shadow-gray-600/40 ring ring-2 ring-purple-600 lg:max-w-xl">
+      <div className="w-full p-6 m-auto bg-white rounded-md shadow-xl shadow-gray-600/40 ring-2 ring-purple-600 lg:max-w-xl">
         <img className="mx-auto w-40" src=" /logo.png" alt="logo" />
         <h1 className=" text -xl font-bold text-center text-purple-500 uppercase decoration-wavy">
           Register an Account
