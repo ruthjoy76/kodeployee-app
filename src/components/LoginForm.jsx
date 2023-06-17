@@ -1,21 +1,13 @@
 import "../App.css";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { FaFacebookSquare, FaGithubSquare, FaGoogle } from "react-icons/fa";
 import loginService from "../services/loginService";
 import employeeService from "../services/employeeService";
-import { FaFacebookSquare, FaGithubSquare, FaGoogle } from "react-icons/fa";
-import LoadingSpinner from "../components/LoadingSpinner";
 
-function LoginForm({
-  user,
-  username,
-  password,
-  loading,
-  setUsername,
-  setPassword,
-  setLoading,
-  setUser,
-}) {
+function LoginForm({ user, setUser }) {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,7 +21,7 @@ function LoginForm({
       .login({ username, password })
       .then((res) => {
         window.localStorage.setItem(
-          "loggedInformationUser",
+          "loggedEmployeeRecordsUser",
           JSON.stringify(res)
         );
         employeeService.setToken(res.token);
@@ -37,10 +29,8 @@ function LoginForm({
         setUsername("");
         setPassword("");
       })
-      .catch((error) => console.log(error));
+      .catch((error) => alert(error.response.data.error));
   };
-
-  if (loading) return <LoadingSpinner />;
 
   return (
     <div className="relative flex flex-col justify-center min-h-screen overflow-hidden ">

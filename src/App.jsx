@@ -1,21 +1,24 @@
 import "./App.css";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
+import EmployeeContext from "./features/EmployeeContext";
+import LoadingContext from "./features/LoadingContext";
 import employeeService from "./services/employeeService";
+import EmployeeRecords from "./pages/EmployeeRecords";
 import LoginForm from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm";
+
 import Dashboard from "./components/Dashboard";
-import EmployeeForm from "./components/EmployeeForm";
 
 function App() {
-  const [employees, setEmployees] = useState([]);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
+  const [employees, setEmployees] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem("loggedInformationUser");
+    const loggedUserJSON = window.localStorage.getItem(
+      "loggedEmployeeRecordsUser"
+    );
 
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON);
@@ -25,54 +28,23 @@ function App() {
   }, []);
 
   return (
-    <div className="min-h-full h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        <Routes>
-          <Route
-            path="/login"
-            element={
-              <LoginForm
-                user={user}
-                username={username}
-                password={password}
-                loading={loading}
-                setUsername={setUsername}
-                setPassword={setPassword}
-                setUser={setUser}
-                setLoading={setLoading}
-              />
-            }
-          />
-          <Route
-            path="/register"
-            element={
-              <RegisterForm
-                user={user}
-                loading={loading}
-                setLoading={setLoading}
-              />
-            }
-          />
-          <Route path="/register" element={<RegisterForm user={user} />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/employee" element={<EmployeeForm />} />
-          <Route
-            path="/logout"
-            element={
-              <LoginForm
-                user={user}
-                username={username}
-                password={password}
-                loading={loading}
-                setUsername={setUsername}
-                setPassword={setPassword}
-                setUser={setUser}
-                setLoading={setLoading}
-              />
-            }
-          />
-        </Routes>
-      </div>
+    <div className="flex flex-col gap-4 p-4">
+      <EmployeeContext.Provider value={{ employees, setEmployees }}>
+        <LoadingContext.Provider value={{ loading, setLoading }}>
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route
+              path="/login"
+              element={<LoginForm user={user} setUser={setUser} />}
+            />
+            <Route
+              path="/employees"
+              element={<EmployeeRecords user={user} setUser={setUser} />}
+            />
+            <Route path="/register" element={<RegisterForm user={user} />} />
+          </Routes>
+        </LoadingContext.Provider>
+      </EmployeeContext.Provider>
     </div>
   );
 }

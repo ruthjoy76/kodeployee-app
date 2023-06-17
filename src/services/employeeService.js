@@ -18,10 +18,20 @@ function getEmployees() {
 
 function createEmployee(employee) {
   const config = {
-    headers: { Authorization: token },
+    headers: { Authorization: token, "Content-Type": "multipart/form-data" },
   };
 
   return axios.post(baseUrl, employee, config).then((res) => res.data);
+}
+
+function updateEmployee(id, employee) {
+  const config = {
+    headers: { Authorization: token },
+  };
+
+  return axios
+    .put(`${baseUrl}/${id}`, employee, config)
+    .then((res) => res.data);
 }
 
 function deleteEmployee(id) {

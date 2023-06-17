@@ -2,8 +2,9 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaFacebookSquare, FaGithubSquare, FaGoogle } from "react-icons/fa";
 import userService from "../services/userService";
+import LoadingSpinner from "./LoadingSpinner";
 
-function RegisterForm({ user }) {
+function RegisterForm({ user, loading, setLoading }) {
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -26,8 +27,11 @@ function RegisterForm({ user }) {
         setUsername("");
         setPassword("");
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.log(error))
+      .finally(() => setLoading(false));
   };
+
+  if (loading) return <LoadingSpinner />;
 
   return (
     <div className="relative flex flex-col justify-center min-h-screen overflow-hidden ">
