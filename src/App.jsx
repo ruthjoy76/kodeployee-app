@@ -4,11 +4,8 @@ import { Routes, Route } from "react-router-dom";
 import employeeService from "./services/employeeService";
 import LoginForm from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm";
-<<<<<<< HEAD
-=======
 import Dashboard from "./components/Dashboard";
 import EmployeeForm from "./components/EmployeeForm";
->>>>>>> ce3a3cc95b2907fae93b63a2a4e213d20fa70dcd
 
 function App() {
   const [employees, setEmployees] = useState([]);
@@ -46,7 +43,6 @@ function App() {
               />
             }
           />
-<<<<<<< HEAD
           <Route
             path="/register"
             element={
@@ -57,12 +53,13 @@ function App() {
               />
             }
           />
-=======
-          <Route path="/register" element={<RegisterForm user={user} />} /> 
+          <Route path="/register" element={<RegisterForm user={user} />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/employee" element={<EmployeeForm />} />
-          <Route path="/logout" element={
-              <LoginForm  
+          <Route
+            path="/logout"
+            element={
+              <LoginForm
                 user={user}
                 username={username}
                 password={password}
@@ -70,8 +67,10 @@ function App() {
                 setUsername={setUsername}
                 setPassword={setPassword}
                 setUser={setUser}
-                setLoading={setLoading}/>} />
->>>>>>> ce3a3cc95b2907fae93b63a2a4e213d20fa70dcd
+                setLoading={setLoading}
+              />
+            }
+          />
         </Routes>
       </div>
     </div>

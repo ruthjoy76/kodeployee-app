@@ -15,10 +15,8 @@ function RegisterForm({ user }) {
 
   const handleRegistration = (e) => {
     e.preventDefault();
-<<<<<<< HEAD
+
     setLoading(true);
-=======
->>>>>>> ce3a3cc95b2907fae93b63a2a4e213d20fa70dcd
 
     userService
       .register({ name, username, password })
@@ -28,7 +26,7 @@ function RegisterForm({ user }) {
         setUsername("");
         setPassword("");
       })
-      .catch((error) => console.log(error))
+      .catch((error) => console.log(error));
   };
 
   return (
