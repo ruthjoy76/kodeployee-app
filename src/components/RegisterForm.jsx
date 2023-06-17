@@ -16,7 +16,6 @@ function RegisterForm({ user, loading, setLoading }) {
 
   const handleRegistration = (e) => {
     e.preventDefault();
-
     setLoading(true);
 
     userService

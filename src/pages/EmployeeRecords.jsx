@@ -4,7 +4,7 @@ import EmployeeForm from "../components/EmployeeForm";
 import EmployeeList from "../components/EmployeeList";
 import LoadingSpinner from "../components/LoadingSpinner";
 
-function Information({
+function EmployeeRecords({
   user,
   employees,
   loading,
@@ -58,4 +58,4 @@ function Information({
   );
 }
 
-export default Information;
+export default EmployeeRecords;
