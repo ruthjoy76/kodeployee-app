@@ -32,7 +32,7 @@ function App() {
       <EmployeeContext.Provider value={{ employees, setEmployees }}>
         <LoadingContext.Provider value={{ loading, setLoading }}>
           <Routes>
-            <Route path="/" element={<Dashboard />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route
               path="/login"
               element={<LoginForm user={user} setUser={setUser} />}
