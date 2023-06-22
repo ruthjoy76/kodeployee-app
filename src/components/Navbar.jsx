@@ -30,7 +30,7 @@ function Navbar() {
   }, [condition]);
 
   return (
-    <div className="flex items-center justify h-20 bg-purple-100  rounded-lg p-4  text-gray-800  font-semibold text-xl  fixed top-0 left-0 right-0 z-00 shadow-md">
+    <div className="flex items-center justify h-20 bg-[#FAF7F7]  rounded-lg p-4  text-gray-800  font-semibold text-xl  fixed top-0 left-0 right-0 z-00 shadow-md">
       <img
         src={Logo}
         alt="Logo"

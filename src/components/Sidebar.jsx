@@ -4,7 +4,7 @@ import { MdLogout } from "react-icons/md";
 
 function Sidebar() {
   return (
-    <div className="bg-purple-100 text-black h-screen w-40 fixed top-0 left-0  z-50 shadow-md' flex flex-col">
+    <div className="bg-[#FAF7F7] text-black h-screen w-40 fixed top-0 left-0  z-50 shadow-md' flex flex-col">
       <img
         src={Logo}
         alt="Logo"
@@ -14,17 +14,17 @@ function Sidebar() {
         <ul className="space-y-2">
           <li className="p-2 text-center hover:bg-purple-700">
             <Link to="/dashboard" className="text-black-500">
-              Dashboard{" "}
+              Dashboard
             </Link>
           </li>
           <li className="p-2 text-center hover:bg-purple-700">
-            <Link to="/employees" className="text-black-500">
-              Employee{" "}
+            <Link to="/employee" className="text-black-500">
+              Employee
             </Link>
           </li>
           <li className="p-2 text-center hover:bg-purple-700">
             <Link to="/leave" className="text-black-500">
-              Leave{" "}
+              Leave
             </Link>
           </li>
         </ul>
@@ -32,7 +32,7 @@ function Sidebar() {
       <footer className="p-6 text-black">
         <Link to="/logout" className="flex items-center pb-5 text-purple-700">
           <MdLogout className="text-2xl" />
-          <p className="ml-2 ">Logout</p>{" "}
+          <p className="ml-2 ">Logout</p>
         </Link>
         <p className="text-xs">© 2023 Kodeployee</p>
       </footer>

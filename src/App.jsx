@@ -4,10 +4,9 @@ import { Routes, Route } from "react-router-dom";
 import EmployeeContext from "./features/EmployeeContext";
 import LoadingContext from "./features/LoadingContext";
 import employeeService from "./services/employeeService";
-import EmployeeRecords from "./pages/EmployeeRecords";
+import Employee from "./pages/Employee";
 import LoginForm from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm";
-
 import Dashboard from "./components/Dashboard";
 
 function App() {
@@ -31,17 +30,21 @@ function App() {
     <div className="flex flex-col gap-4 p-4">
       <EmployeeContext.Provider value={{ employees, setEmployees }}>
         <LoadingContext.Provider value={{ loading, setLoading }}>
-          <Routes>
-            <Route path="/dashboard" element={<Dashboard />} />
+          <Routes> 
             <Route
-              path="/login"
+              path="/"
               element={<LoginForm user={user} setUser={setUser} />}
             />
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route
-              path="/employees"
-              element={<EmployeeRecords user={user} setUser={setUser} />}
+              path="/employee"
+              element={<Employee user={user} setUser={setUser} />}
             />
             <Route path="/register" element={<RegisterForm user={user} />} />
+            <Route
+              path="/logout"
+              element={<LoginForm user={user} setUser={setUser} />}
+            />
           </Routes>
         </LoadingContext.Provider>
       </EmployeeContext.Provider>

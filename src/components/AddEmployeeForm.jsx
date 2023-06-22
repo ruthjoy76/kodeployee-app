@@ -2,7 +2,13 @@ import { useState, useRef, useEffect, useContext } from "react";
 import EmployeeContext from "../features/EmployeeContext";
 import employeeService from "../services/employeeService";
 
-function EmployeeForm({ setLoading, newPhoto, setNewPhoto }) {
+function AddEmployeeForm({
+  setLoading,
+  newPhoto,
+  setNewPhoto,
+  showModal,
+  closeModal,
+}) {
   const { employees, setEmployees } = useContext(EmployeeContext);
   const [newFirstName, setNewFirstName] = useState("");
   const [newMiddleName, setNewMiddleName] = useState("");
@@ -17,8 +23,8 @@ function EmployeeForm({ setLoading, newPhoto, setNewPhoto }) {
     fileInputRef.current.value = null;
   }, [fileInputRef]);
 
-  const addEmployee = (event) => {
-    event.preventDefault();
+  const addEmployee = (e) => {
+    e.preventDefault();
 
     setLoading(true);
 
@@ -44,119 +50,129 @@ function EmployeeForm({ setLoading, newPhoto, setNewPhoto }) {
         setNewEmail("");
         setNewGender("");
         setNewDOB("");
+
+        closeModal();
       })
       .catch((error) => console.log(error))
       .finally(() => setLoading(false));
+
+    closeModal();
   };
 
   return (
-    <form onSubmit={addEmployee} className="mt-8 space-y-6">
-      {/* <h1>
-        Total Employees:{" "}
-        <span className="bg-green-500 text-white font-bold w-24 py-2 px-3">
-          {employees.length}
-        </span>
-      </h1> */}
-
-      <div className="flex flex-col">
-        <label>Upload contact photo</label>
-        <input
-          className="flex items-center justify-between bg-white rounded-lg shadow-md w-64 p-2 mb-1"
-          type="file"
-          accept="image/*"
-          ref={fileInputRef}
-          onChange={(event) => setNewPhoto(event.target.files[0])}
-        />
-      </div>
-
-      <div className="flex flex-col">
-        <label>First Name</label>
-        <input
-          className="flex items-center justify-between bg-white rounded-lg shadow-md w-64 p-2 mb-1"
-          type="text"
-          value={newFirstName}
-          onChange={(event) => setNewFirstName(event.target.value)}
-          placeholder="Enter First Name"
-        />
-      </div>
-      <div className="flex flex-col">
-        <label>Middle Name</label>
-        <input
-          className="flex items-center justify-between bg-white rounded-lg shadow-md w-64 p-2 mb-1"
-          type="text"
-          value={newMiddleName}
-          onChange={(event) => setNewMiddleName(event.target.value)}
-          placeholder="Enter Middle Name"
-        />
-      </div>
-
-      <div className="flex flex-col">
-        <label>Last Name</label>
-        <input
-          className="flex items-center justify-between bg-white rounded-lg shadow-md w-64 p-2 mb-1"
-          type="text"
-          value={newLastName}
-          onChange={(event) => setNewLastName(event.target.value)}
-          placeholder="Enter First Name"
-        />
-      </div>
-
-      <div className="flex flex-col">
-        <label>Phone Number</label>
-        <input
-          className="flex items-center justify-between bg-white rounded-lg shadow-md w-64 p-2 mb-2"
-          type="text"
-          value={newNumber}
-          onChange={(event) => setNewNumber(event.target.value)}
-          placeholder="Enter phone number"
-        />
-      </div>
-
-      <div className="flex flex-col">
-        <label>Email</label>
-        <input
-          className="flex items-center justify-between bg-white rounded-lg shadow-md w-64 p-2 mb-2"
-          type="email"
-          value={newEmail}
-          onChange={(event) => setNewEmail(event.target.value)}
-          placeholder="Enter Email Address"
-        />
-      </div>
-
-      <div className="flex flex-col">
-        <label>Gender</label>
-
-        <select
-          className="flex flex-col"
-          id="gender"
-          name="gender"
-          value={newGender}
-          onChange={(event) => setNewGender(event.target.value)}
-        >
-          <option value=""> -Please Select- </option>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-        </select>
-      </div>
-
-      <div className="flex flex-col">
-        <label>Birthday</label>
-        <input
-          className="flex items-center justify-between bg-white rounded-lg shadow-md w-64 p-2 mb-2"
-          type="date"
-          value={newDOB}
-          onChange={(event) => setNewDOB(event.target.value)}
-        />
-      </div>
-
-      <button
-        className="bg-purple-500 hover:bg-purple-400 text-white font-bold w-24 py-2 px-3 border-b-4 border-purple-800 hover:border-purple-500 rounded"
-        type="submit"
+    <div className={`modalContainer ${showModal ? "block" : "hidden"}`}>
+      <form
+        onSubmit={addEmployee}
+        className="flex flex-col gap-4 p-4 border-solid border-2 border-slate-500 md:max-w-xl md:mx-auto"
       >
-        Add
-      </button>
-    </form>
+        <div className="flex flex-col">
+          <label>Upload contact photo</label>
+          <input
+            className="border-solid border-2 border-slate-500 p-2"
+            type="file"
+            accept="image/*"
+            ref={fileInputRef}
+            onChange={(e) => setNewPhoto(e.target.files[0])}
+          />
+        </div>
+        <div className="flex flex-col">
+          <label>First Name</label>
+          <input
+            className="flex items-center justify-between bg-white rounded-lg shadow-md w-64 p-2 mb-1"
+            type="text"
+            value={newFirstName}
+            onChange={(event) => setNewFirstName(event.target.value)}
+            placeholder="Enter First Name"
+          />
+        </div>
+        <div className="flex flex-col">
+          <label>Middle Name</label>
+          <input
+            className="flex items-center justify-between bg-white rounded-lg shadow-md w-64 p-2 mb-1"
+            type="text"
+            value={newMiddleName}
+            onChange={(event) => setNewMiddleName(event.target.value)}
+            placeholder="Enter Middle Name"
+          />
+        </div>
+
+        <div className="flex flex-col">
+          <label>Last Name</label>
+          <input
+            className="flex items-center justify-between bg-white rounded-lg shadow-md w-64 p-2 mb-1"
+            type="text"
+            value={newLastName}
+            onChange={(event) => setNewLastName(event.target.value)}
+            placeholder="Enter First Name"
+          />
+        </div>
+
+        <div className="flex flex-col">
+          <label>Phone Number</label>
+          <input
+            className="flex items-center justify-between bg-white rounded-lg shadow-md w-64 p-2 mb-2"
+            type="tel"
+            id="number"
+            value={newNumber}
+            onChange={(event) => setNewNumber(event.target.value)}
+            placeholder="Enter phone number"
+          />
+        </div>
+
+        <div className="flex flex-col">
+          <label>Email</label>
+          <input
+            className="flex items-center justify-between bg-white rounded-lg shadow-md w-64 p-2 mb-2"
+            type="email"
+            value={newEmail}
+            onChange={(event) => setNewEmail(event.target.value)}
+            placeholder="Enter Email Address"
+          />
+        </div>
+
+        <div className="flex flex-col">
+          <label>Gender</label>
+
+          <select
+            className="flex flex-col"
+            id="gender"
+            name="gender"
+            value={newGender}
+            onChange={(event) => setNewGender(event.target.value)}
+          >
+            <option value=""> -Please Select- </option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+        </div>
+
+        <div className="flex flex-col">
+          <label>Birthday</label>
+          <input
+            className="flex items-center justify-between bg-white rounded-lg shadow-md w-64 p-2 mb-2"
+            type="date"
+            value={newDOB}
+            onChange={(event) => setNewDOB(event.target.value)}
+          />
+        </div>
+
+        <button
+          className="bg-purple-500 hover:bg-purple-400 text-white font-bold w-24 py-2 px-3 border-b-4 border-purple-800 hover:border-purple-500 rounded"
+          type="submit"
+        >
+          Add
+        </button>
+
+        <button
+          className="bg-slate-500 py-2 text-white font-bold"
+          type="button"
+          onClick={closeModal}
+        >
+          Cancel
+        </button>
+      </form>
+    </div>
   );
 }
 
-export default EmployeeForm;
+export default AddEmployeeForm;
