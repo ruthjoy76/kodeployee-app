@@ -1,13 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import LoadingContext from "../features/LoadingContext";
 import { FaFacebookSquare, FaGithubSquare, FaGoogle } from "react-icons/fa";
 import userService from "../services/userService";
 import LoadingSpinner from "./LoadingSpinner";
 
-function RegisterForm({ user, loading, setLoading }) {
+function RegisterForm({ user}) {
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const { loading, setLoading } = useContext(LoadingContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -16,7 +18,6 @@ function RegisterForm({ user, loading, setLoading }) {
 
   const handleRegistration = (e) => {
     e.preventDefault();
-
     setLoading(true);
 
     userService
@@ -31,7 +32,13 @@ function RegisterForm({ user, loading, setLoading }) {
       .finally(() => setLoading(false));
   };
 
-  if (loading) return <LoadingSpinner />;
+  if (loading) {
+    return (
+      <div className="flex flex-col h-screen items-center justify-center">
+        <LoadingSpinner />
+      </div>
+    );
+  }
 
   return (
     <div className="relative flex flex-col justify-center min-h-screen overflow-hidden ">
