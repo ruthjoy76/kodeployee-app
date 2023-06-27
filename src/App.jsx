@@ -32,10 +32,10 @@ function App() {
         <LoadingContext.Provider value={{ loading, setLoading }}>
           <Routes> 
             <Route
-              path="/"
+              path="/login"
               element={<LoginForm user={user} setUser={setUser} />}
             />
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/" element={<Dashboard user={user} setUser={setUser} />} />
             <Route
               path="/employee"
               element={<Employee user={user} setUser={setUser} />}

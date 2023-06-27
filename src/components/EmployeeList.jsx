@@ -1,85 +1,93 @@
-import { useEffect, useContext } from "react";
-import { FaTrashAlt, FaUserEdit } from "react-icons/fa";
-import EmployeeContext from "../features/EmployeeContext";
-import employeeService from "../services/employeeService";
+import { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import LoadingContext from "../features/LoadingContext";
+import AddEmployeeForm from "../components/AddEmployeeForm";
+import EmployeeList from "../components/EmployeeList";
+import EditEmployeeForm from "../components/EditEmployeeForm";
+import LoadingSpinner from "../components/LoadingSpinner";
 
-function EmployeeList({ setLoading, setEditEmployee }) {
-  const { employees, setEmployees } = useContext(EmployeeContext);
+function Employee({ user, setUser }) {
+  const { loading, setLoading } = useContext(LoadingContext);
+  const [showModal, setShowModal] = useState(false);
+
+  const [editEmployee, setEditEmployee] = useState(null);
+  const [newPhoto, setNewPhoto] = useState(null);
+  const navigate = useNavigate();
+
+  const openModal = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
 
   useEffect(() => {
-    employeeService
-      .getEmployees()
-      .then((response) => {
-        setEmployees(response);
-      })
-      .catch((error) => console.log(error));
-  }, []);
+    if (!user) navigate("/login");
+  }, [user, navigate]);
 
-  const editEmployee = (employee) => {
-    setEditEmployee(employee);
+  const handleLogout = () => {
+    window.localStorage.removeItem("loggedEmployeeUser");
+    setUser(null);
   };
 
-  const deleteEmployee = (id) => {
-    setLoading(true);
-    employeeService
-      .deleteEmployee(id)
-      .then((_response) => {
-        setEmployees(employees.filter((person) => employee.id !== id));
-      })
-      .catch((error) => console.log(error))
-      .finally(() => setLoading(false));
-  };
+  if (loading) {
+    return (
+      <div className="flex flex-col h-screen items-center justify-center">
+        <LoadingSpinner />
+      </div>
+    );
+  }
 
   return (
-    <ul className="border-solid border-2 border-slate-500 p-4">
-      {employees.map((employee) => (
-        <thead>
-          <tr key={employee.id} className="flex items-center justify-between">
-            <th class="py-2 px-4 bg-gray-100 border-b">Employee Photo</th>
-            <th class="py-2 px-4 bg-gray-100 border-b">First Name</th>
-            <th class="py-2 px-4 bg-gray-100 border-b">Middle Name</th>
-            <th class="py-2 px-4 bg-gray-100 border-b">Last Name</th>
-            <th class="py-2 px-4 bg-gray-100 border-b">Contact Number</th>
-            <th class="py-2 px-4 bg-gray-100 border-b">Email</th>
-            <th class="py-2 px-4 bg-gray-100 border-b">Gender</th>
-            <th class="py-2 px-4 bg-gray-100 border-b">Birthdate</th>
-            <th class="py-2 px-4 bg-gray-100 border-b">Action</th>
-          </tr>
+    <div className="fixed top-24 left-52 w-1/5 h-72 mt-4 border border-gray-300 rounded-xl bg-[#FAF7F7] flex justify-center items-center space-y-96 space-x-96">
+      <div className="flex-1">
+        <h1 className="text-4xl mb-4 text-center font-bold">Employees</h1>
 
-          <tbody>
-            <tr>
-              <td class="py-2 px-4 border-b">
-                {" "}
-                <img
-                  src={employee.photoInfo.url}
-                  alt="Contact photo"
-                  className="w-10"
+        <button
+          onClick={openModal}
+          className="bg-purple-500 hover:bg-purple-400 text-white font-bold w-24 py-2 px-3 border-b-4 border-purple-800 hover:border-purple-500 rounded"
+        >
+          Add New Employee
+        </button>
+        <div>
+          {user && (
+            <>
+              <EmployeeList
+                setLoading={setLoading}
+                setEditEmployee={setEditEmployee}
+              />
+              {editEmployee ? (
+                <EditEmployeeForm
+                  employee={editEmployee}
+                  newPhoto={newPhoto}
+                  setNewPhoto={setNewPhoto}
+                  setLoading={setLoading}
+                  onCancel={() => setEditEmployee(null)}
                 />
-              </td>
-              <td class="py-2 px-4 border-b">{employee.firstname}</td>
-              <td class="py-2 px-4 border-b"> {employee.middlename}</td>
-              <td class="py-2 px-4 border-b">{employee.lastname}</td>
-              <td class="py-2 px-4 border-b">{employee.number}</td>
-              <td class="py-2 px-4 border-b">{employee.email}</td>
-              <td class="py-2 px-4 border-b">{employee.gender}</td>
-              <td class="py-2 px-4 border-b"> {employee.dob}</td>
-              <td class="py-2 px-4 border-b">
-                {" "}
-                <FaUserEdit
-                  className="hover: cursor-pointer"
-                  onClick={() => editEmployee(employee)}
+              ) : (
+                <AddEmployeeForm
+                  newPhoto={newPhoto}
+                  setNewPhoto={setNewPhoto}
+                  setLoading={setLoading}
+                  showModal={showModal}
                 />
-                <FaTrashAlt
-                  className="hover: cursor-pointer"
-                  onClick={() => deleteEmployee(employee.id)}
-                />
-              </td>
-            </tr>
-          </tbody>
-        </thead>
-      ))}
-    </ul>
+              )}
+            </>
+          )}
+        </div>
+      </div>
+      <p className="flex justify-between items-center text-sm my-4">
+        {user?.name} is logged in{" "}
+        <button
+          onClick={handleLogout}
+          className="bg-red-500 p-2 text-white font-bold"
+        >
+          Logout
+        </button>
+      </p>
+    </div>
   );
-      }
+}
 
-export default EmployeeList;
+export default Employee;

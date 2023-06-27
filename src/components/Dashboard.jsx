@@ -1,19 +1,29 @@
 import Attendance from './Attendance'
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
+import { useNavigate } from 'react-router-dom';
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css';
 import moment from 'moment'
 import EmployeesLeaveBoard from './EmployeesLeaveBoard'
 import JobPost from './JobPost'
 import Navbar from './Navbar'
-import SideBar from './SideBar'
 import TotalEmployees from './TotalEmployees'
+import Sidebar from './Sidebar';
 
-function Dashboard() {
+function Dashboard({user, setUser}) {
+  const navigate = useNavigate()
+
   const [dateState, setDateState] = useState(new Date())
   const changeDate = (e) => {
     setDateState(e)
   }
+
+  useEffect(() => {
+    if(!user) {
+      navigate('/login')
+    }
+  }, [user, navigate])
+
   return (
     <div>
       <TotalEmployees />
@@ -28,7 +38,7 @@ function Dashboard() {
       </div>
       
       <JobPost /> 
-      <SideBar />
+      <Sidebar user={user} setUser={setUser} />
       <Navbar />
       <EmployeesLeaveBoard />
       
