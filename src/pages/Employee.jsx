@@ -14,9 +14,9 @@ function Employee({ user, setUser }) {
   const [newPhoto, setNewPhoto] = useState(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!user) navigate("/login");
-  }, [user, navigate]);
+  // useEffect(() => {
+  //   if (!user) navigate("/login");
+  // }, [user, navigate]);
 
   if (loading) {
     return (
@@ -29,7 +29,9 @@ function Employee({ user, setUser }) {
   return (
     <div className="fixed top-24 left-52 w-screen h-72 mt-4 ">
       <div className="flex-1">
-        <h1 className="text-4xl mb-4 text-left ml-24 text-gray-700 font-bold ">Employees</h1>
+        <h1 className="text-4xl mb-4 text-left ml-24 text-gray-700 font-bold ">
+          Employees
+        </h1>
         <div>
           {user && (
             <>
@@ -58,7 +60,6 @@ function Employee({ user, setUser }) {
       </div>
       <p className="fixed justify-between items-center text-sm my-4 bottom-0">
         {user?.name} is logged in{" "}
-  
       </p>
       {/* <Navbar />
       <Sidebar /> */}

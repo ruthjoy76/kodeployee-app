@@ -22,10 +22,6 @@ function Employee({ user, setUser }) {
     setShowModal(false);
   };
 
-  useEffect(() => {
-    if (!user) navigate("/login");
-  }, [user, navigate]);
-
   const handleLogout = () => {
     window.localStorage.removeItem("loggedEmployeeUser");
     setUser(null);
